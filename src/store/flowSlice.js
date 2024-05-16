@@ -41,6 +41,15 @@ const flowSlice = createSlice({
     addNode: (state, action) => {
       state.nodes = [...state.nodes, action.payload];
     },
+    editNodeMessage: (state, action) => {
+      const nodeId = action.payload.id;
+      const nodeIndex = state.nodes.findIndex((node) => node.id === nodeId);
+      if (nodeIndex !== -1) {
+        state.nodes[nodeIndex].data.value = action.payload.value;
+        state.selectedNode = null;
+      }
+    },
+
     removeNode: (state, action) => {
       state.nodes = state.nodes.filter((node) => node.id !== action.payload);
     },
@@ -78,6 +87,7 @@ const flowSlice = createSlice({
 export const {
   addNode,
   removeNode,
+  editNodeMessage,
   addEdge,
   removeEdge,
   nodeChanges,
