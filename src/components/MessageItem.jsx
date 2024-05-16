@@ -2,8 +2,16 @@ import Box from "@mui/material/Box";
 import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import Typography from "@mui/material/Typography";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { useDispatch } from "react-redux";
+import { selectNode } from "../store/flowSlice";
 
-export default function MessageItem({ value }) {
+export default function MessageItem({ value, id }) {
+  const dispatch = useDispatch();
+
+  function handleClick() {
+    dispatch(selectNode(id));
+  }
+
   return (
     <Box
       sx={{
@@ -12,6 +20,7 @@ export default function MessageItem({ value }) {
         boxShadow: "3px 5px 15px 2px rgba(0,0,0,0.35)",
         overflow: "hidden",
       }}
+      onClick={handleClick}
     >
       <Box
         sx={{

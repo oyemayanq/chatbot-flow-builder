@@ -10,6 +10,8 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { useDispatch } from "react-redux";
+import { removeEdge } from "../store/flowSlice";
 
 const EdgeMarker = {
   type: {
@@ -26,6 +28,7 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }) {
     targetX,
     targetY,
   });
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -33,15 +36,15 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }) {
       <EdgeLabelRenderer>
         <IconButton
           onClick={() => {
-            setEdges((es) => es.filter((e) => e.id !== id));
+            dispatch(removeEdge(id));
           }}
           sx={{
             position: "absolute",
             transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
             pointerEvents: "all",
-            zIndex: 10,
             padding: "2px",
             color: "#000",
+            zIndex: 30,
             "&:hover": {
               backgroundColor: "#f6b2b1",
               color: "red",

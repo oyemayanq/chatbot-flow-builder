@@ -17,55 +17,53 @@ import NodesPanel from "./components/NodesPanel";
 import CustomNode from "./components/CustomNode";
 import CustomEdge from "./components/CustomEdge";
 import MessageItem from "./components/MessageItem";
-
-const initialNodes = [
-  {
-    id: "1",
-    data: { label: MessageItem, value: "Text" },
-    position: { x: 0, y: 0 },
-    type: "customNode",
-  },
-  {
-    id: "2",
-    data: { label: "Flow" },
-    position: { x: 100, y: 100 },
-  },
-  {
-    id: "3",
-    data: { label: "Flow" },
-    position: { x: 200, y: 200 },
-  },
-];
-
-const initialEdges = [
-  {
-    id: "1-2",
-    source: "1",
-    target: "2",
-    type: "customEdge",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addNode,
+  addEdge as addEdgeAction,
+  edgeChanges,
+  nodeChanges,
+  unselectNode,
+} from "./store/flowSlice";
 
 const nodeTypes = { customNode: CustomNode };
 const edgeTypes = { customEdge: CustomEdge };
 
 export default function App() {
-  const [messages, setMessages] = useState([]);
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  const { nodes, edges, selectedNode } = useSelector((state) => state.flow);
+  const dispatch = useDispatch();
 
-  const onNodesChange = useCallback((changes) => {
-    setNodes((nds) => applyNodeChanges(changes, nds));
-  }, []);
+  const onNodesChange = useCallback(
+    (changes) => {
+      const newNodes = applyNodeChanges(changes, nodes);
+      dispatch(nodeChanges(newNodes));
+    },
+    [nodes, dispatch]
+  );
 
-  const onEdgeChange = useCallback((changes) => {
-    setEdges((eds) => applyEdgeChanges(changes, eds));
-  }, []);
+  const onEdgeChange = useCallback(
+    (changes) => {
+      const newEdges = applyEdgeChanges(changes, edges);
+      dispatch(edgeChanges(newEdges));
+    },
+    [edges, dispatch]
+  );
 
-  const onConnect = useCallback((params) => {
-    const edge = { ...params, type: "customEdge" };
-    setEdges((eds) => addEdge(edge, eds));
-  }, []);
+  const onConnect = useCallback(
+    (params) => {
+      const index = edges.findIndex((edge) => edge.source === params.source);
+      if (index !== -1) {
+        return;
+      }
+      const newEdge = {
+        ...params,
+        type: "customEdge",
+        id: `${params.source}-${params.target}`,
+      };
+      dispatch(addEdgeAction(newEdge));
+    },
+    [edges, dispatch]
+  );
 
   return (
     <Box sx={{ padding: "0" }}>
@@ -74,9 +72,22 @@ export default function App() {
         <Box
           sx={{ width: "75vw" }}
           onDrop={(e) => {
+            //console.log("event", e);
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const id = `${nodes.length + 1}`;
+            const newNode = {
+              id,
+              data: {
+                value: "",
+              },
+              position: { x, y },
+              type: "customNode",
+            };
+            dispatch(addNode(newNode));
             const messageType = e.dataTransfer.getData("messageType");
             console.log("messageType", messageType);
-            setMessages((prevMessages) => [...prevMessages, messageType]);
             console.log("drop");
           }}
           onDragOver={(e) => {
@@ -98,7 +109,14 @@ export default function App() {
           </ReactFlow>
         </Box>
         <Box sx={{ width: "25vw" }}>
-          <NodesPanel />
+          {selectedNode !== null ? (
+            <SettingsPanel
+              selectedNode={selectedNode}
+              backClickHandler={() => dispatch(unselectNode())}
+            />
+          ) : (
+            <NodesPanel />
+          )}
         </Box>
       </Box>
     </Box>

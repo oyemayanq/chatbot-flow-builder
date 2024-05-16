@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-export default function SettingsPanel() {
+export default function SettingsPanel({ selectedNode, backClickHandler }) {
   return (
     <Box
       sx={{
@@ -21,7 +21,7 @@ export default function SettingsPanel() {
           borderBottom: "1px solid #777",
         }}
       >
-        <IconButton>
+        <IconButton onClick={backClickHandler}>
           <ArrowBackIcon sx={{ color: "#555", "&:hover": { color: "#000" } }} />
         </IconButton>
         <Box sx={{ margin: "0 auto" }}>
