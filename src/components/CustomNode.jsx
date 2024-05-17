@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import MessageItem from "./MessageItem";
 
+// CustomNode component to implement custom node
 export default function CustomNode({ id, data }) {
   return (
     <>

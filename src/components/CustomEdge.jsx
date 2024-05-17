@@ -1,22 +1,11 @@
-import {
-  BaseEdge,
-  getStraightPath,
-  getBezierPath,
-  EdgeLabelRenderer,
-  useReactFlow,
-  MarkerType,
-} from "reactflow";
+import { useDispatch } from "react-redux";
+import { BaseEdge, getBezierPath, EdgeLabelRenderer } from "reactflow";
 
-import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { useDispatch } from "react-redux";
 import { removeEdge } from "../store/flowSlice";
 
-// const markerEnd = {
-//   type: MarkerType.ArrowClosed,
-// };
-
+// CustomEdge component to show edges with cross button and arrow at the end
 export default function CustomEdge({
   id,
   sourceX,
@@ -28,7 +17,6 @@ export default function CustomEdge({
   style = {},
   markerEnd,
 }) {
-  const { setEdges } = useReactFlow();
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,

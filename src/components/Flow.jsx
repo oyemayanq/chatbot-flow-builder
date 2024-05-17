@@ -45,6 +45,8 @@ export default function Flow() {
     [edges, dispatch]
   );
 
+  // Adding new edge. A check is added to ensure that there is only one edge from
+  // a source
   const onConnect = useCallback(
     (params) => {
       const index = edges.findIndex((edge) => edge.source === params.source);

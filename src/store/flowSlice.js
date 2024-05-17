@@ -76,6 +76,7 @@ const flowSlice = createSlice({
     selectNode: (state, action) => {
       const selectedNodeId = action.payload;
       const node = state.nodes?.find((node) => node.id === selectedNodeId);
+
       if (node) {
         state.selectedNode = node;
       } else {

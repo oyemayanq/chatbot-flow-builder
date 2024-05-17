@@ -1,6 +1,8 @@
 function dfs(nodes, edges, nodeId, visited) {
   visited.add(nodeId);
 
+  // Getting list of node ids where the current nodeId might be connected
+  // either as a source or target
   const nodeList = edges
     .filter((edge) => {
       if (edge.source === nodeId) {
@@ -30,6 +32,8 @@ function dfs(nodes, edges, nodeId, visited) {
   });
 }
 
+// This function checks if the flow is disconnected
+// It checks by applying DFS on the nodes and edges
 export function isGraphDisconnected(nodes, edges, sourceNode = "1") {
   let visited = new Set();
 

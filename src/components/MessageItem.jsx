@@ -7,6 +7,7 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { useDispatch } from "react-redux";
 import { removeNode, selectNode } from "../store/flowSlice";
 
+// MessageItem component used in CustomNode
 export default function MessageItem({ value, id }) {
   const dispatch = useDispatch();
 
