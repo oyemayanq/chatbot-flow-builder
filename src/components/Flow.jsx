@@ -51,6 +51,7 @@ export default function Flow() {
       if (index !== -1) {
         return;
       }
+
       const newEdge = {
         ...params,
         type: "customEdge",
@@ -67,9 +68,9 @@ export default function Flow() {
   function handleDrop(e) {
     e.preventDefault();
     const rect = e.target.getBoundingClientRect();
-    const position = reactFlowInstance.project({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+    const position = reactFlowInstance.screenToFlowPosition({
+      x: e.clientX,
+      y: e.clientY,
     });
 
     const id = `${nodes.length + 1}`;

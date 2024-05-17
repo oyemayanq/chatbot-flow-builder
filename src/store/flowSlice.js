@@ -36,6 +36,7 @@ const initialState = {
   ],
 
   selectedNode: null,
+  saveError: null,
 };
 
 const flowSlice = createSlice({
@@ -85,6 +86,10 @@ const flowSlice = createSlice({
     unselectNode: (state) => {
       state.selectedNode = null;
     },
+
+    setSaveError: (state, action) => {
+      state.saveError = action.payload;
+    },
   },
 });
 
@@ -98,5 +103,6 @@ export const {
   edgeChanges,
   selectNode,
   unselectNode,
+  setSaveError,
 } = flowSlice.actions;
 export default flowSlice.reducer;
