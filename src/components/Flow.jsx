@@ -102,7 +102,7 @@ export default function Flow() {
         edges={edges}
         onEdgesChange={onEdgeChange}
         onConnect={onConnect}
-        fitView
+        defaultViewport={{ x: 100, y: 100, zoom: 1 }}
       >
         <Background />
         <Controls />
