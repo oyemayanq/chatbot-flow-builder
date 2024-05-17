@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { MarkerType } from "reactflow";
 
 const initialState = {
   nodes: [
@@ -28,6 +29,9 @@ const initialState = {
       source: "1",
       target: "2",
       type: "customEdge",
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+      },
     },
   ],
 

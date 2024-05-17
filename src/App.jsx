@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import ReactFlow, {
   Background,
   Controls,
+  MarkerType,
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
@@ -58,6 +59,9 @@ export default function App() {
       const newEdge = {
         ...params,
         type: "customEdge",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+        },
         id: `${params.source}-${params.target}`,
       };
       dispatch(addEdgeAction(newEdge));

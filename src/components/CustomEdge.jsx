@@ -4,37 +4,47 @@ import {
   getBezierPath,
   EdgeLabelRenderer,
   useReactFlow,
+  MarkerType,
 } from "reactflow";
 
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useDispatch } from "react-redux";
 import { removeEdge } from "../store/flowSlice";
 
-const EdgeMarker = {
-  type: {
-    Arrow: "arrow",
-    ArrowClosed: "arrowClosed",
-  },
-};
+// const markerEnd = {
+//   type: MarkerType.ArrowClosed,
+// };
 
-export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }) {
+export default function CustomEdge({
+  id,
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  sourcePosition,
+  targetPosition,
+  style = {},
+  markerEnd,
+}) {
   const { setEdges } = useReactFlow();
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
+    sourcePosition,
     targetX,
     targetY,
+    targetPosition,
   });
   const dispatch = useDispatch();
 
   return (
     <>
-      <BaseEdge id={id} path={edgePath} markerEnd={EdgeMarker} />
+      <BaseEdge id={id} path={edgePath} markerEnd={markerEnd} />
       <EdgeLabelRenderer>
         <IconButton
+          className="nodrag nopan"
           onClick={() => {
             dispatch(removeEdge(id));
           }}
@@ -44,14 +54,16 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }) {
             pointerEvents: "all",
             padding: "2px",
             color: "#000",
-            zIndex: 30,
+            backgroundColor: "#eee",
+            border: "1px solid #fff",
+            cursor: "pointer",
             "&:hover": {
-              backgroundColor: "#f6b2b1",
-              color: "red",
+              boxShadow: "0 0 6px 2px rgba(0, 0, 0, 0.08)",
+              backgroundColor: "#eee",
             },
           }}
         >
-          <CloseIcon sx={{ fontSize: "10px" }} />
+          <CloseIcon sx={{ fontSize: "12px" }} />
         </IconButton>
       </EdgeLabelRenderer>
     </>
