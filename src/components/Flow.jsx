@@ -67,7 +67,6 @@ export default function Flow() {
 
   function handleDrop(e) {
     e.preventDefault();
-    const rect = e.target.getBoundingClientRect();
     const position = reactFlowInstance.screenToFlowPosition({
       x: e.clientX,
       y: e.clientY,

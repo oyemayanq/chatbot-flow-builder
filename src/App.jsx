@@ -15,7 +15,7 @@ export default function App() {
 
   return (
     <Box sx={{ padding: "0" }}>
-      <TopBar onSaveChanges={() => {}} />
+      <TopBar />
       <Box sx={{ display: "flex" }}>
         <Box sx={{ width: "75vw" }}>
           <Flow />

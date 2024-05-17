@@ -25,7 +25,7 @@ export default function SettingsPanel({ selectedNode, backClickHandler }) {
         sx={{
           display: "flex",
           alignItems: "center",
-          padding: "4px 0px",
+          padding: "8px 4px",
           borderBottom: "1px solid #777",
         }}
       >

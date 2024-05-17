@@ -10,7 +10,7 @@ export default function NodesPanel() {
         boxShadow: "-2px 0px 5px 0px rgba(0,0,0,0.2)",
         width: "100%",
         height: "92vh",
-        padding: "16px 8px",
+        padding: "32px 8px",
       }}
     >
       <Grid container spacing={2}>
@@ -40,23 +40,6 @@ export default function NodesPanel() {
             <Typography color="primary">Message</Typography>
           </Box>
         </Grid>
-
-        {/* <Grid item xs={6}>
-          <Box
-            sx={{
-              height: "100px",
-              borderRadius: "10px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              border: "1px solid rgba(25, 118, 210, 0.5)",
-            }}
-          >
-            <MessageOutlinedIcon sx={{ color: "#1976d2" }} />
-            <Typography color="primary">Message</Typography>
-          </Box>
-        </Grid> */}
       </Grid>
     </Box>
   );
