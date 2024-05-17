@@ -2,8 +2,31 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import Typography from "@mui/material/Typography";
+import { useDispatch, useSelector } from "react-redux";
+import { addNode } from "../store/flowSlice";
+import { useReactFlow } from "reactflow";
 
 export default function NodesPanel() {
+  const { nodes } = useSelector((state) => state.flow);
+  const dispatch = useDispatch();
+  const reactFlowInstance = useReactFlow();
+
+  function handleClick() {
+    const id = `${nodes.length + 1}`;
+    const position = reactFlowInstance.screenToFlowPosition({
+      x: 400,
+      y: 400,
+    });
+    const newNode = {
+      id,
+      data: {
+        value: "",
+      },
+      position,
+      type: "customNode",
+    };
+    dispatch(addNode(newNode));
+  }
   return (
     <Box
       sx={{
@@ -20,6 +43,7 @@ export default function NodesPanel() {
             onDragStart={(e) => {
               e.dataTransfer.setData("messageType", "text");
             }}
+            onClick={handleClick}
             sx={{
               height: "100px",
               borderRadius: "10px",
